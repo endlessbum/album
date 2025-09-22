@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: album
+    env: node
+    plan: free
+    autoDeploy: true
+    buildCommand: npm ci && npm run build
+    startCommand: npm run start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NODE_VERSION
+        value: 20
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: DATABASE_URL
+        sync: false # set this from Render Postgres (Internal Connection URL)
+    disk:
+      name: uploads
+      mountPath: public/uploads
+      sizeGB: 1
