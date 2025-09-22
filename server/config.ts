@@ -23,13 +23,19 @@ if (isTest) {
   };
 
   if (result.error) {
-    console.error('❌ Ошибка загрузки .env:', result.error);
-    throw result.error;
+    // Если .env отсутствует (ENOENT) — не падаем: в проде переменные приходят из окружения платформы
+    const code = (result.error as any)?.code;
+    if (code === 'ENOENT') {
+      console.warn('ℹ️ .env not found; using platform environment variables only');
+    } else {
+      console.error('❌ Ошибка загрузки .env:', result.error);
+    }
   } else {
     console.warn('✅ Переменные окружения загружены из .env');
-    console.warn(`📊 DATABASE_URL: ${maskUrl(process.env.DATABASE_URL)}`);
-    console.warn(`📊 PORT: ${process.env.PORT || 'Using default'}`);
   }
+
+  console.warn(`📊 DATABASE_URL: ${maskUrl(process.env.DATABASE_URL)}`);
+  console.warn(`📊 PORT: ${process.env.PORT || 'Using default'}`);
 }
 
 export {};
