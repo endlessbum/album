@@ -12,8 +12,8 @@ const TabsList = React.forwardRef<
   <TabsPrimitive.List
     ref={ref}
     className={cn(
-      // Make list flex and allow wrapping so it works both as inline and grid replacement
-      "flex flex-wrap h-10 items-center justify-center rounded-md bg-muted p-1 text-muted-foreground gap-1",
+  // Flex with wrapping; auto height on small screens to avoid clipping second row
+  "flex flex-wrap min-h-10 items-center justify-center rounded-md bg-muted p-1 text-muted-foreground gap-1",
       className
     )}
     {...props}

@@ -128,7 +128,7 @@ function AppContent() {
   const showBottomNav = Boolean(user);
 
   return (
-    <div className={showBottomNav ? "pb-[4.75rem] pb-safe" : undefined}>
+    <div className={showBottomNav ? "pb-bottom-nav" : undefined}>
       {/* Background layers */}
       <div className="ui-glow" aria-hidden />
       <div className="ui-noise" aria-hidden />

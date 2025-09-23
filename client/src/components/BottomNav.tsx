@@ -1,11 +1,12 @@
 import { Home, Music, PlusSquare, Mail, User, Settings, Pause, Play, SkipBack, SkipForward, Volume2, Shuffle, Repeat, Repeat1, Gamepad2, X, Type, ImageIcon, VideoIcon, Quote } from "lucide-react";
 import { Link, useLocation } from "wouter";
 import { useAudioPlayer } from "@/hooks/use-audio-player";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import CreateMemoryModal from "@/components/create-memory-modal";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
 export default function BottomNav() {
+  const navRef = useRef<HTMLDivElement | null>(null);
   const [location] = useLocation();
   const player = useAudioPlayer();
   const [volOpen, setVolOpen] = useState(false);
@@ -29,9 +30,23 @@ export default function BottomNav() {
     return `${m}:${r.toString().padStart(2, '0')}`;
   };
 
+  // Keep CSS var --bottom-nav-h in sync with actual nav height (mini-player may expand)
+  useEffect(() => {
+    const el = navRef.current;
+    if (!el) return;
+    const setVar = () => {
+      const h = el.getBoundingClientRect().height;
+      document.documentElement.style.setProperty('--bottom-nav-h', `${Math.ceil(h)}px`);
+    };
+    setVar();
+    const ro = new ResizeObserver(setVar);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [hasTrack, volOpen]);
+
   return (
     // Убрали hover-lift, чтобы панель не «прыгала» при наведении
-    <nav className="fixed bottom-[max(0.5rem,env(safe-area-inset-bottom))] left-1/2 -translate-x-1/2 z-[60] w-[min(560px,calc(100%-1.5rem))] rounded-2xl glass shadow-lg px-2">
+    <nav ref={navRef} className="fixed bottom-[max(0.5rem,env(safe-area-inset-bottom))] left-1/2 -translate-x-1/2 z-[60] w-[min(560px,calc(100%-1.5rem))] rounded-2xl glass shadow-lg px-2">
       <div className="relative flex flex-col items-stretch">
         {/* Mini player */}
   <div className={`transition-[max-height,opacity,transform] duration-300 overflow-hidden px-3 ${hasTrack ? 'pt-2 max-h-20 opacity-100 translate-y-0' : 'pt-0 max-h-0 opacity-0 -translate-y-2'}`}>

@@ -86,8 +86,9 @@
   text-size-adjust: 100%;
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
-  /* Respect iOS safe areas for full-bleed fixed elements */
-  padding-bottom: env(safe-area-inset-bottom);
+  /* Respect iOS safe areas; dynamic space for fixed BottomNav */
+  /* --bottom-nav-h is set by BottomNav on mount and updates with mini-player */
+  padding-bottom: calc(var(--bottom-nav-h, 4.5rem) + env(safe-area-inset-bottom));
   }
 
   .dark body {
@@ -101,6 +102,9 @@
 .pt-safe { padding-top: env(safe-area-inset-top); }
 .pl-safe { padding-left: env(safe-area-inset-left); }
 .pr-safe { padding-right: env(safe-area-inset-right); }
+
+/* Utility: main content bottom padding matching BottomNav height */
+.pb-bottom-nav { padding-bottom: calc(var(--bottom-nav-h, 4.5rem) + env(safe-area-inset-bottom)); }
 
 /* Матовое стекло */
 .glass {
