@@ -475,7 +475,8 @@ export default function SettingsPage() {
           </h1>
 
           <Tabs value={activeTab} onValueChange={updateUrlTab} className="space-y-6">
-            <TabsList className="grid grid-cols-6 w-full bg-background text-foreground rounded-md p-1">
+            {/* Tabs: horizontal scroll / wrap on mobile, strict grid on md+ */}
+            <TabsList className="w-full bg-background text-foreground rounded-md p-1 grid grid-cols-3 sm:grid-cols-6 gap-1">
               <TabsTrigger value="access" data-testid="tab-access">
                 <Shield className="w-4 h-4 mr-2" />
                 Доступ

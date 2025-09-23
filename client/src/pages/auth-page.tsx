@@ -109,9 +109,10 @@ export default function AuthPage() {
 
   return (
   <div className="min-h-screen flex items-center justify-center p-4" data-testid="auth-page">
-      <div className="w-full max-w-6xl flex flex-col md:flex-row gap-6 md:gap-8">
-        {/* Левая панель с логотипом и манифестом */}
-        <div className="w-full md:flex-1 flex flex-col justify-center items-center glass-strong rounded-2xl p-6 md:p-8 floating mb-4 md:mb-0">
+      {/* Mobile: manifesto should be BELOW auth form. Desktop: keep original left/right. */}
+      <div className="w-full max-w-6xl flex flex-col-reverse md:flex-row gap-6 md:gap-8">
+  {/* Левая панель с логотипом и манифестом (на мобиле располагается после формы) */}
+  <div className="w-full md:flex-1 flex flex-col justify-center items-center glass-strong rounded-2xl p-6 md:p-8 floating mt-4 md:mt-0">
           <div className="text-center">
             {/* Оригинальный логотип без изменений */}
             <img 
@@ -126,7 +127,7 @@ export default function AuthPage() {
           </div>
         </div>
 
-        {/* Правая панель с формой авторизации */}
+    {/* Правая панель с формой авторизации (на мобиле первая) */}
   <div className="w-full md:flex-1">
           <div className="glass-strong rounded-2xl p-6 md:p-8">
             <Tabs defaultValue="login" className="w-full">

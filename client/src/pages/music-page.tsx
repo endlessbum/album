@@ -659,11 +659,12 @@ export default function MusicPage() {
 
   return (
     <div className="flex min-h-screen">
-      <main className="flex-1 p-6">
+      <main className="flex-1 p-4 sm:p-6">
         {/* Header */}
-        <div className="mb-8">
-          <div className="grid grid-cols-[auto,1fr,auto] items-center gap-4 mb-6 relative">
-            <h1 className="text-3xl font-bold text-foreground">
+        <div className="mb-6 sm:mb-8">
+          {/* Header layout: three columns on desktop, stacked on mobile */}
+          <div className="mb-4 sm:mb-6 relative flex flex-col sm:grid sm:grid-cols-[auto,1fr,auto] items-center gap-4">
+            <h1 className="text-2xl sm:text-3xl font-bold text-foreground w-full sm:w-auto text-center sm:text-left">
               {(() => {
                 if (viewingPartnerMusic && effectivePartnerData?.partner) {
                   return 'Музыка партнера';
@@ -677,16 +678,16 @@ export default function MusicPage() {
               })()}
             </h1>
             {/* Centered to viewport */}
-            <div className="absolute left-1/2 -translate-x-1/2 z-10">
+      <div className="w-full sm:w-auto sm:absolute sm:left-1/2 sm:-translate-x-1/2 z-10 order-3 sm:order-none mt-2 sm:mt-0">
               <SearchIcon className="absolute left-2 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none z-20" />
               <Input
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="Поиск по названию и исполнителю"
-                className="px-8 w-[27rem] max-w-[90vw] glass focus-ring text-center placeholder:text-center"
+        placeholder="Поиск..."
+        className="px-8 w-full sm:w-[27rem] max-w-full sm:max-w-[90vw] glass focus-ring text-center placeholder:text-center"
               />
             </div>
-            <div className="justify-self-end">
+      <div className="w-full sm:w-auto flex justify-center sm:justify-end order-2 sm:order-none">
               {!viewingPartnerMusic && (
                 <Button onClick={onClickAdd} className="btn-gradient" disabled={isUploading}>
                   {isUploading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Plus className="mr-2 h-4 w-4" />}
@@ -697,7 +698,7 @@ export default function MusicPage() {
           </div>
 
           {/* Partner music toggle */}
-          <div className="mb-4">
+          <div className="mb-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
             {viewingPartnerMusic ? (
               // When viewing partner's music - show back button
               <Button
@@ -735,7 +736,7 @@ export default function MusicPage() {
           {/* Navigation tabs (centered above playlist) */}
           {!viewingPartnerMusic && (
             <div className="mb-4 flex w-full justify-center">
-              <div className="flex w-full max-w-[700px] flex-wrap items-center justify-center gap-2">
+              <div className="flex w-full max-w-[700px] flex-wrap items-center justify-center gap-2 px-1">
                 <Button
                   variant={currentView === 'all' ? 'default' : 'outline'}
                   size="sm"
@@ -832,7 +833,7 @@ export default function MusicPage() {
         {/* Vertical list: single shared background */}
         <div className={`flex justify-center ${filtered.length === 0 ? 'mt-6' : ''}`}>
           {filtered.length === 0 ? (
-            <div className="glass rounded-xl p-8 text-center w-full max-w-[900px]">
+            <div className="glass rounded-xl p-6 sm:p-8 text-center w-full max-w-[900px]">
               <p className="text-muted-foreground text-lg">Аудио не найдено. Добавьте файл или измените запрос.</p>
             </div>
           ) : (
@@ -867,7 +868,7 @@ export default function MusicPage() {
                   onDragEnd={() => { setDraggingId(null); setOverId(null); }}
                   style={{ cursor: 'grab' }}
                 >
-                  <div className="flex items-center justify-between gap-3 min-w-0">
+                  <div className="flex items-center justify-between gap-3 min-w-0 flex-wrap">
                     <div className="flex items-center gap-3 min-w-0">
                       <div className="relative h-9 w-9 shrink-0">
                         {/* Cover tile */}

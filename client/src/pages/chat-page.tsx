@@ -268,10 +268,10 @@ export default function ChatPage() {
   return (
     <div className="flex h-[100dvh] overflow-hidden" data-testid="chat-page">
       <main className="flex-1 flex">
-        {/* Центрированный контейнер с той же шириной, что и на странице профиля */}
-  <div className="max-w-4xl w-full mx-auto px-4 sm:px-6 lg:px-0 h-full box-border pb-[88px] flex flex-col">
+        {/* Центрированный контейнер */}
+  <div className="max-w-4xl w-full mx-auto px-3 sm:px-6 lg:px-0 h-full box-border pb-[88px] flex flex-col">
         {/* Заголовок чата */}
-  <div className="glass-strong p-4 mt-3 mb-3 rounded-xl hover-lift" data-testid="chat-header">
+  <div className="glass-strong p-3 sm:p-4 mt-2 sm:mt-3 mb-3 rounded-xl hover-lift" data-testid="chat-header">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="relative">
@@ -317,7 +317,7 @@ export default function ChatPage() {
 
         {/* Область сообщений */}
         <div 
-          className="flex-1 min-h-0 glass mb-3 rounded-xl p-4 overflow-y-auto hide-scrollbar hover-lift"
+          className="flex-1 min-h-0 glass mb-3 rounded-xl p-3 sm:p-4 overflow-y-auto hide-scrollbar hover-lift"
           style={getChatBackgroundStyle(chatBgKey)}
           data-testid="messages-container"
         >
