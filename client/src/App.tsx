@@ -1,3 +1,4 @@
+import React, { Suspense } from "react";
 import { Switch, Route } from "wouter";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
@@ -8,37 +9,97 @@ import { AuthProvider } from "./hooks/use-auth";
 import { useAuth } from "./hooks/use-auth";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ProtectedRoute } from "./lib/protected-route";
+import { Loader2 } from "lucide-react";
 
-import NotFound from "@/pages/not-found";
-import AuthPage from "@/pages/auth-page";
-import PrivacyPolicyPage from "@/pages/privacy-policy";
-import TermsPage from "@/pages/terms";
-import HomePage from "@/pages/home-page";
-import ChatPage from "@/pages/chat-page";
-import ProfilePage from "@/pages/profile-page";
-import SettingsPage from "@/pages/settings-page";
-import GamesPage from "@/pages/games-page";
-
+// Route-level code-splitting
+const NotFound = React.lazy(() => import("@/pages/not-found"));
+const AuthPage = React.lazy(() => import("@/pages/auth-page"));
+const PrivacyPolicyPage = React.lazy(() => import("@/pages/privacy-policy"));
+const TermsPage = React.lazy(() => import("@/pages/terms"));
+const HomePage = React.lazy(() => import("@/pages/home-page"));
+const ChatPage = React.lazy(() => import("@/pages/chat-page"));
+const ProfilePage = React.lazy(() => import("@/pages/profile-page"));
+const SettingsPage = React.lazy(() => import("@/pages/settings-page"));
+const GamesPage = React.lazy(() => import("@/pages/games-page"));
 // 🔥 новые страницы
-import MusicPage from "@/pages/music-page";
+const MusicPage = React.lazy(() => import("@/pages/music-page"));
 
 import BottomNav from "@/components/BottomNav"; // нижняя панель навигации
 import { AudioPlayerProvider } from "./hooks/use-audio-player";
 
+function Fallback() {
+  return (
+    <div className="flex items-center justify-center min-h-[40vh]">
+      <Loader2 className="h-6 w-6 animate-spin text-border" />
+    </div>
+  );
+}
+
 function Router() {
   return (
     <Switch>
-      <Route path="/auth" component={AuthPage} />
-      <Route path="/privacy" component={PrivacyPolicyPage} />
-      <Route path="/terms" component={TermsPage} />
-      <ProtectedRoute path="/" component={HomePage} />
-  <ProtectedRoute path="/music" component={MusicPage} />
-  <ProtectedRoute path="/games" component={GamesPage} />
-    <ProtectedRoute path="/messages" component={ChatPage} />
-    <ProtectedRoute path="/settings" component={SettingsPage} />
-      <ProtectedRoute path="/profile" component={ProfilePage} />
-  {/** Настройки доступны по /settings и частично в профиле */}
-      <Route component={NotFound} />
+      {/* Public */}
+      <Route
+        path="/auth"
+        component={() => (
+          <Suspense fallback={<Fallback />}>
+            <AuthPage />
+          </Suspense>
+        )}
+      />
+      <Route
+        path="/privacy"
+        component={() => (
+          <Suspense fallback={<Fallback />}>
+            <PrivacyPolicyPage />
+          </Suspense>
+        )}
+      />
+      <Route
+        path="/terms"
+        component={() => (
+          <Suspense fallback={<Fallback />}>
+            <TermsPage />
+          </Suspense>
+        )}
+      />
+      {/* Protected with Suspense wrappers to support React.lazy */}
+      <ProtectedRoute path="/" component={() => (
+        <Suspense fallback={<Fallback />}>
+          <HomePage />
+        </Suspense>
+      )} />
+      <ProtectedRoute path="/music" component={() => (
+        <Suspense fallback={<Fallback />}>
+          <MusicPage />
+        </Suspense>
+      )} />
+      <ProtectedRoute path="/games" component={() => (
+        <Suspense fallback={<Fallback />}>
+          <GamesPage />
+        </Suspense>
+      )} />
+      <ProtectedRoute path="/messages" component={() => (
+        <Suspense fallback={<Fallback />}>
+          <ChatPage />
+        </Suspense>
+      )} />
+      <ProtectedRoute path="/settings" component={() => (
+        <Suspense fallback={<Fallback />}>
+          <SettingsPage />
+        </Suspense>
+      )} />
+      <ProtectedRoute path="/profile" component={() => (
+        <Suspense fallback={<Fallback />}>
+          <ProfilePage />
+        </Suspense>
+      )} />
+      {/* 404 */}
+      <Route component={() => (
+        <Suspense fallback={<Fallback />}>
+          <NotFound />
+        </Suspense>
+      )} />
     </Switch>
   );
 }
