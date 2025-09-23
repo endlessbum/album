@@ -15,7 +15,54 @@ const app = express();
 app.use(express.json({ limit: '20mb' }));
 app.use(express.urlencoded({ extended: false, limit: '20mb' }));
 
-// Serve uploaded files statically
+// Простейшая защита Basic Auth (включается, если заданы учётные данные)
+// Установите BASIC_AUTH_USER и BASIC_AUTH_PASS, чтобы включить пароль на весь сайт.
+// Можно отключить на здоровье/хелсчек и статику загрузок.
+const basicUser = process.env.BASIC_AUTH_USER;
+const basicPass = process.env.BASIC_AUTH_PASS;
+const basicRealm = process.env.BASIC_AUTH_REALM || 'Protected';
+
+if (basicUser && basicPass) {
+  const safeEqual = (a: string, b: string) => {
+    // одна длина, чтобы избежать ранних возвратов
+    const len = Math.max(a.length, b.length);
+    let res = 0;
+    for (let i = 0; i < len; i++) {
+      const ca = a.charCodeAt(i) || 0;
+      const cb = b.charCodeAt(i) || 0;
+      res |= (ca ^ cb);
+    }
+    return res === 0 && a.length === b.length;
+  };
+
+  app.use((req, res, next) => {
+    // пропускаем health и репорты развертывания
+    if (req.path === '/api/health') return next();
+
+    const hdr = req.headers.authorization || '';
+    const m = /^Basic\s+(.+)$/i.exec(hdr);
+    if (!m) {
+      res.setHeader('WWW-Authenticate', `Basic realm="${basicRealm}", charset="UTF-8"`);
+      return res.status(401).end('Authorization required');
+    }
+    let user = '';
+    let pass = '';
+    try {
+      const decoded = Buffer.from(m[1], 'base64').toString('utf8');
+      const idx = decoded.indexOf(':');
+      user = decoded.slice(0, idx);
+      pass = decoded.slice(idx + 1);
+    } catch {
+      // ignore
+    }
+
+    if (safeEqual(user, basicUser) && safeEqual(pass, basicPass)) return next();
+    res.setHeader('WWW-Authenticate', `Basic realm="${basicRealm}", charset="UTF-8"`);
+    return res.status(401).end('Invalid credentials');
+  });
+}
+
+// Serve uploaded files statically (после Basic Auth, чтобы защищать и их)
 app.use('/uploads', express.static(path.join(process.cwd(), 'public', 'uploads')));
 
 // Attach/propagate request id for better tracing

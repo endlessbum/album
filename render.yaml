@@ -18,6 +18,12 @@ services:
         generateValue: true
       - key: DATABASE_URL
         sync: false # set this from Render Postgres (Internal Connection URL)
+      - key: BASIC_AUTH_USER
+        sync: false # set to desired login to enable browser auth
+      - key: BASIC_AUTH_PASS
+        sync: false # set to desired password to enable browser auth
+      - key: BASIC_AUTH_REALM
+        value: "Private"
     disk:
       name: uploads
       mountPath: public/uploads

@@ -109,9 +109,9 @@ export default function AuthPage() {
 
   return (
   <div className="min-h-screen flex items-center justify-center p-4" data-testid="auth-page">
-      <div className="w-full max-w-6xl flex gap-8">
+      <div className="w-full max-w-6xl flex flex-col md:flex-row gap-6 md:gap-8">
         {/* Левая панель с логотипом и манифестом */}
-        <div className="flex-1 flex flex-col justify-center items-center glass-strong rounded-2xl p-8 floating">
+        <div className="w-full md:flex-1 flex flex-col justify-center items-center glass-strong rounded-2xl p-6 md:p-8 floating mb-4 md:mb-0">
           <div className="text-center">
             {/* Оригинальный логотип без изменений */}
             <img 
@@ -127,13 +127,13 @@ export default function AuthPage() {
         </div>
 
         {/* Правая панель с формой авторизации */}
-  <div className="flex-1">
-          <div className="glass-strong rounded-2xl p-8">
+  <div className="w-full md:flex-1">
+          <div className="glass-strong rounded-2xl p-6 md:p-8">
             <Tabs defaultValue="login" className="w-full">
-              <TabsList className="grid w-full grid-cols-3">
-                <TabsTrigger value="login" data-testid="tab-login">Вход</TabsTrigger>
-                <TabsTrigger value="register" data-testid="tab-register">Регистрация</TabsTrigger>
-                <TabsTrigger value="invite" data-testid="tab-invite">Приглашение</TabsTrigger>
+              <TabsList className="w-full">
+                <TabsTrigger className="flex-1" value="login" data-testid="tab-login">Вход</TabsTrigger>
+                <TabsTrigger className="flex-1" value="register" data-testid="tab-register">Регистрация</TabsTrigger>
+                <TabsTrigger className="flex-1" value="invite" data-testid="tab-invite">Приглашение</TabsTrigger>
               </TabsList>
 
               {/* Форма входа */}
@@ -297,9 +297,9 @@ export default function AuthPage() {
               <TabsContent value="invite" className="space-y-4">
                 <div className="mb-6">
                   <Tabs value={inviteMode} onValueChange={(value) => setInviteMode(value as 'existing' | 'new')}>
-                    <TabsList className="grid w-full grid-cols-2">
-                      <TabsTrigger value="existing" data-testid="invite-existing">У меня есть аккаунт</TabsTrigger>
-                      <TabsTrigger value="new" data-testid="invite-new">У меня нет аккаунта</TabsTrigger>
+                    <TabsList className="w-full">
+                      <TabsTrigger className="flex-1" value="existing" data-testid="invite-existing">У меня есть аккаунт</TabsTrigger>
+                      <TabsTrigger className="flex-1" value="new" data-testid="invite-new">У меня нет аккаунта</TabsTrigger>
                     </TabsList>
 
                     <TabsContent value="existing" className="space-y-4 mt-4">
@@ -481,7 +481,7 @@ export default function AuthPage() {
       </div>
 
       {/* Футер */}
-      <footer className="fixed bottom-0 left-0 right-0 text-center py-4 text-sm text-muted-foreground">
+  <footer className="fixed bottom-0 left-0 right-0 text-center py-4 pb-safe text-sm text-muted-foreground">
         © 2025 — {new Date().getFullYear()} Endlessalbum · Создано с заботой о пользователях
         <span className="block mt-1">
           <a href="/privacy" className="hover:text-foreground transition-colors" data-testid="link-privacy">

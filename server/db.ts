@@ -1,19 +1,17 @@
 // Загружаем переменные окружения
 import "./config";
 
-import { Pool, neonConfig } from '@neondatabase/serverless';
-import { drizzle } from 'drizzle-orm/neon-serverless';
-import ws from "ws";
+import { Pool } from 'pg';
+import { drizzle } from 'drizzle-orm/node-postgres';
 import * as schema from "@shared/schema";
-
-neonConfig.webSocketConstructor = ws;
 
 let pool: Pool | undefined;
 let db: any;
 
 if (process.env.DATABASE_URL) {
   console.warn(`🔗 Connecting to database with URL: ${process.env.DATABASE_URL.substring(0, 50)}...`);
-  pool = new Pool({ connectionString: process.env.DATABASE_URL });
+  // Supabase/most managed Postgres require TLS; disable CA verification for simplicity
+  pool = new Pool({ connectionString: process.env.DATABASE_URL, ssl: { rejectUnauthorized: false } as any });
   db = drizzle({ client: pool, schema });
   console.warn('✅ Database connection pool created');
 } else {
