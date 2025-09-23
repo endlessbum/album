@@ -658,7 +658,7 @@ export default function MusicPage() {
   }, [query, audios, currentView, favorites, albums]);
 
   return (
-    <div className="flex min-h-screen">
+    <div className="flex min-h-screen w-full overflow-x-hidden">
       <main className="flex-1 p-4 sm:p-6">
         {/* Header */}
         <div className="mb-6 sm:mb-8">
@@ -736,7 +736,7 @@ export default function MusicPage() {
           {/* Navigation tabs (centered above playlist) */}
           {!viewingPartnerMusic && (
             <div className="mb-4 flex w-full justify-center">
-              <div className="flex w-full max-w-[700px] flex-wrap items-center justify-center gap-2 px-1">
+              <div className="flex w-full max-w-[700px] flex-nowrap sm:flex-wrap items-center justify-start sm:justify-center gap-2 px-1 overflow-x-auto no-scrollbar">
                 <Button
                   variant={currentView === 'all' ? 'default' : 'outline'}
                   size="sm"
@@ -897,7 +897,7 @@ export default function MusicPage() {
                           );
                         })()}
                       </div>
-                      <div className="font-medium text-sm leading-tight truncate" title={a.artist ? `${a.title} ${a.artist}` : a.title}>
+                      <div className="font-medium text-sm leading-tight truncate break-all" title={a.artist ? `${a.title} ${a.artist}` : a.title}>
                         <span className="text-foreground">{a.title}</span>
                         {a.artist ? (
                           <>

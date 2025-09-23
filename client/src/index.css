@@ -362,6 +362,13 @@ img, video { max-width: 100%; height: auto; }
   display: none;
 }
 
+/* Horizontal scroll container without visible scrollbar */
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE/Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.no-scrollbar::-webkit-scrollbar { display: none; }
+
 /* Кнопки с градиентом */
 .btn-gradient {
   background: linear-gradient(135deg, var(--primary), var(--secondary));

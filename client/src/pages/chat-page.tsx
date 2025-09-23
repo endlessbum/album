@@ -266,10 +266,10 @@ export default function ChatPage() {
   }
 
   return (
-    <div className="flex h-[100dvh] overflow-hidden" data-testid="chat-page">
+    <div className="flex h-[100dvh] overflow-hidden w-full overflow-x-hidden" data-testid="chat-page">
       <main className="flex-1 flex">
         {/* Центрированный контейнер */}
-  <div className="max-w-4xl w-full mx-auto px-3 sm:px-6 lg:px-0 h-full box-border pb-[88px] flex flex-col">
+  <div className="max-w-4xl w-full mx-auto px-3 sm:px-6 lg:px-0 h-full box-border pb-[88px] flex flex-col overflow-x-hidden">
         {/* Заголовок чата */}
   <div className="glass-strong p-3 sm:p-4 mt-2 sm:mt-3 mb-3 rounded-xl hover-lift" data-testid="chat-header">
           <div className="flex items-center justify-between">
@@ -344,7 +344,7 @@ export default function ChatPage() {
 
   {/* Поле ввода сообщения */}
   <div className="glass-strong mb-0 rounded-xl p-3 sm:p-4 hover-lift" data-testid="message-input-container">
-          <form onSubmit={handleSendMessage} className="flex flex-wrap gap-2 sm:gap-3 items-center md:items-end">
+          <form onSubmit={handleSendMessage} className="flex flex-wrap gap-2 sm:gap-3 items-center md:items-end w-full">
             {/* Меню вложений: обычные файлы + эфемерные опции */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -394,14 +394,14 @@ export default function ChatPage() {
             >
               <Timer className="h-4 w-4" />
             </Button>
-    <div className="flex-1 min-w-0 w-full md:w-auto">
+  <div className="flex-1 min-w-0 w-full md:w-auto">
               <div className="space-y-2">
                 <Textarea
                   value={newMessage}
                   onChange={(e) => handleInputChange(e.target.value)}
                   // Сервер удалит через 2 минуты — отражаем это в плейсхолдере
                   placeholder={ephemeralMode ? "Эфемерное сообщение (исчезнет через 2 мин)..." : "Напишите сообщение..."}
-      className={`min-h-[44px] max-h-32 resize-none w-full ${ephemeralMode ? 'border-primary/50 bg-primary/10' : ''}`}
+                  className={`min-h-[44px] max-h-32 resize-none w-full break-words ${ephemeralMode ? 'border-primary/50 bg-primary/10' : ''}`}
                   rows={1}
                   onKeyDown={(e) => {
                     if (e.key === 'Enter' && !e.shiftKey) {

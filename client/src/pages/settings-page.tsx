@@ -475,29 +475,29 @@ export default function SettingsPage() {
           </h1>
 
           <Tabs value={activeTab} onValueChange={updateUrlTab} className="space-y-6">
-            {/* Tabs: horizontal scroll / wrap on mobile, strict grid on md+ */}
-            <TabsList className="w-full bg-background text-foreground rounded-md p-1 grid grid-cols-3 sm:grid-cols-6 gap-1">
-              <TabsTrigger value="access" data-testid="tab-access">
+            {/* Tabs: make scrollable on small screens to avoid overflow */}
+            <TabsList className="w-full bg-background text-foreground rounded-md p-1 flex flex-nowrap sm:grid sm:grid-cols-6 gap-1 overflow-x-auto sm:overflow-visible no-scrollbar">
+              <TabsTrigger value="access" data-testid="tab-access" className="shrink-0 whitespace-nowrap px-3 py-2 text-xs sm:text-sm">
                 <Shield className="w-4 h-4 mr-2" />
                 Доступ
               </TabsTrigger>
-              <TabsTrigger value="appearance" data-testid="tab-appearance">
+              <TabsTrigger value="appearance" data-testid="tab-appearance" className="shrink-0 whitespace-nowrap px-3 py-2 text-xs sm:text-sm">
                 <Palette className="w-4 h-4 mr-2" />
                 Оформление
               </TabsTrigger>
-              <TabsTrigger value="messages" data-testid="tab-messages">
+              <TabsTrigger value="messages" data-testid="tab-messages" className="shrink-0 whitespace-nowrap px-3 py-2 text-xs sm:text-sm">
                 <MessageSquare className="w-4 h-4 mr-2" />
                 Сообщения
               </TabsTrigger>
-              <TabsTrigger value="notifications" data-testid="tab-notifications">
+              <TabsTrigger value="notifications" data-testid="tab-notifications" className="shrink-0 whitespace-nowrap px-3 py-2 text-xs sm:text-sm">
                 <Bell className="w-4 h-4 mr-2" />
                 Уведомления
               </TabsTrigger>
-              <TabsTrigger value="events" data-testid="tab-events">
+              <TabsTrigger value="events" data-testid="tab-events" className="shrink-0 whitespace-nowrap px-3 py-2 text-xs sm:text-sm">
                 <Calendar className="w-4 h-4 mr-2" />
                 События
               </TabsTrigger>
-              <TabsTrigger value="games" data-testid="tab-games">
+              <TabsTrigger value="games" data-testid="tab-games" className="shrink-0 whitespace-nowrap px-3 py-2 text-xs sm:text-sm">
                 <Gamepad2 className="w-4 h-4 mr-2" />
                 Игры
               </TabsTrigger>
