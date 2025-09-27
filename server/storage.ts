@@ -488,12 +488,23 @@ export class MemStorage implements IStorage {
 }
 
 export class PgStorage implements IStorage {
-  async updateMessage(_id: string, _updates: Partial<Message>): Promise<Message> {
-    throw new Error("updateMessage not implemented for PgStorage");
+  async updateMessage(id: string, updates: Partial<Message>): Promise<Message> {
+    // Remove id from updates if present
+    const { id: _, ...fields } = updates;
+    const result = await db.update(messages)
+      .set(fields)
+      .where(eq(messages.id, id))
+      .returning();
+    if (result.length === 0) throw new Error("Message not found");
+    return result[0];
   }
 
-  async deleteMessage(_id: string): Promise<void> {
-    throw new Error("deleteMessage not implemented for PgStorage");
+  async deleteMessage(id: string): Promise<void> {
+    const result = await db.delete(messages)
+      .where(eq(messages.id, id))
+      .returning();
+    if (result.length === 0) throw new Error("Message not found");
+    return;
   }
   public sessionStore: session.Store;
 

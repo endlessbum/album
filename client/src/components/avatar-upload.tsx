@@ -78,11 +78,11 @@ export function AvatarUpload({ currentAvatarUrl, username, onAvatarChange }: Ava
       return;
     }
 
-    // Validate file size (5MB max)
-    if (file.size > 5 * 1024 * 1024) {
+    // Validate file size (15MB max)
+    if (file.size > 15 * 1024 * 1024) {
       toast({
         title: "Файл слишком большой",
-        description: "Максимальный размер файла: 5MB",
+        description: "Максимальный размер файла: 15MB",
         variant: "destructive"
       });
       return;
