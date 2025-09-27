@@ -846,31 +846,6 @@ export default function ProfilePage() {
                   </CardContent>
                 </Card>
 
-                <Card className="glass-strong hover-lift">
-                  <CardHeader>
-                    <CardTitle>Роль</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-center">
-                      <div
-                        className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-primary/10 text-primary"
-                        data-testid="user-role"
-                      >
-                        {profile?.role === 'main_admin' && 'Администратор'}
-                        {profile?.role === 'co_admin' && 'Равноправный администратор'}
-                        {profile?.role === 'guest' && 'Гость'}
-                        {profile?.role === 'user' && 'Пользователь'}
-                      </div>
-                      <p className="text-xs text-muted-foreground mt-2">
-                        {profile?.role === 'main_admin' &&
-                          'Может управлять приглашениями и правами'}
-                        {profile?.role === 'co_admin' && 'Полный доступ ко всем функциям'}
-                        {profile?.role === 'guest' && 'Ограниченный доступ к контенту'}
-                        {profile?.role === 'user' && 'Стандартный доступ к функциям'}
-                      </p>
-                    </div>
-                  </CardContent>
-                </Card>
 
                 {/* Настройки перенесены ниже, над разделом "Аккаунт" */}
               </div>

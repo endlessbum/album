@@ -709,7 +709,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // SECURITY: Enhanced avatar upload endpoint with proper error handling
   app.post("/api/upload/avatar", (req, res, next) => {
     avatarUpload.single('avatar')(req, res, (err) => {
+      console.log('[AVATAR UPLOAD] Multer middleware called');
+      console.log('[AVATAR UPLOAD] req.body:', req.body);
+      console.log('[AVATAR UPLOAD] req.file:', req.file);
       if (err) {
+        console.error('[AVATAR UPLOAD] Multer error:', err);
         // SECURITY: Handle specific multer errors with proper HTTP status codes
         if (err.code === 'LIMIT_FILE_SIZE') {
           return res.status(413).json({
@@ -740,6 +744,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
       next();
     });
   }, async (req, res) => {
+    console.log('[AVATAR UPLOAD] Handler called');
+    console.log('[AVATAR UPLOAD] req.body:', req.body);
+    console.log('[AVATAR UPLOAD] req.file:', req.file);
     // SECURITY: Authentication check
     if (!req.isAuthenticated()) return res.sendStatus(401);
     
